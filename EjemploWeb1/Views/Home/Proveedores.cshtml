@@ -1,0 +1,298 @@
+﻿
+@using EjemploWeb1.Models;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<ProveedoresModel>
+
+@{
+    ViewBag.Title = "Proveedores";
+}
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <style>
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            .pagination li {
+                margin: 0 5px;
+            }
+
+            .pagination a {
+                color: #007bff;
+                text-decoration: none;
+                padding: 8px 12px;
+                border: 1px solid #007bff;
+                border-radius: 4px;
+            }
+
+                .pagination a:hover {
+                    background-color: #007bff;
+                    color: #fff;
+                }
+
+            .pagination .active a {
+                background-color: #007bff;
+                color: #fff;
+            }
+    </style>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Contenido de la vista -->
+    <div class="container">
+        <h2>Lista de Proveedores</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Giro</th>
+                    <th>Direccion</th>
+                    <th>Descripcion</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var persona in Model)
+                {
+                    <tr data-toggle="modal" onclick="mostrarBotonNuevo()"  data-target="#myModal" data-Id="@persona.Id" data-nombre="@persona.Nombre" data-giro="@persona.Giro" data-direccion="@persona.Direccion" data-descripcion="@persona.Descripcion" data-precio="@persona.Precio">
+                        <td>@persona.Id</td>
+                        <td>@persona.Nombre</td>
+                        <td>@persona.Giro</td>
+                        <td>@persona.Direccion</td>
+                        <td>@persona.Descripcion</td>
+                        <td>@persona.Precio</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- Mostrar la información de paginación -->
+        <nav aria-label="Page navigation">
+            <div class="pagination-container">
+                @Html.PagedListPager(Model, pagina => Url.Action("Proveedores", new { pagina }))
+            </div>
+        </nav>
+
+        <button type="button" class="btn btn-primary" onclick="ocultarBotonNuevo()" data-toggle="modal" data-target="#myModal">
+            Nuevo Proveedor
+        </button>
+
+        <!-- Modal Editable -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Detalles de Persona</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="personaForm">
+
+
+                            <div class="form-group">
+                                <label for="modalId">Id:</label>
+                                <input type="text" class="form-control" id="modalId" name="Id" readonly />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="modalNombre">Nombre:</label>
+                                <input type="text" class="form-control" id="modalNombre" name="Nombre" />
+                            </div>
+                            <div class="form-group">
+                                <label for="modalGiro">Giro:</label>
+                                <input type="text" class="form-control" id="modalGiro" name="Giro" />
+                            </div>
+                            <div class="form-group">
+                                <label for="modalDireccion">Dirección:</label>
+                                <input type="text" class="form-control" id="modalDireccion" name="Direccion" />
+                            </div>
+                            <div class="form-group">
+                                <label for="modalDescripcion">Descripción:</label>
+                                <input type="text" class="form-control" id="modalDescripcion" name="Descripcion" />
+                            </div>
+                            <div class="form-group">
+                                <label for="modalPrecio">Precio:</label>
+                                <input type="text" class="form-control" id="modalPrecio" name="Precio" />
+                            </div>
+                            <button type="button" class="btn btn-primary" id="nuevoBtn">Nuevo</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="guardarCambiosBtn">Guardar Cambios</button>
+                        <button type="button" class="btn btn-danger" id="eliminarBtn">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function ocultarBotonNuevo() {
+                // Ocultar el botón con el id "nuevoBtn"
+                $("#nuevoBtn").hide();
+                $("#eliminarBtn").hide();
+            }
+            function mostrarBotonNuevo() {
+                // Mostrar el botón con el id "nuevoBtn"
+                $("#nuevoBtn").show();
+                $("#eliminarBtn").show();
+            }
+            $(document).ready(function () {
+
+                
+                var originalData = {}; // Almacena los datos originales antes de la edición
+
+                // Configurar evento clic para la fila de la tabla
+                $('table tbody tr').on('click', function () {
+                    // Obtener los datos de la fila
+                    var id = $(this).data('id');
+                    var nombre = $(this).data('nombre');
+                    var giro = $(this).data('giro');
+                    var direccion = $(this).data('direccion');
+                    var descripcion = $(this).data('descripcion');
+                    var precio = $(this).data('precio');
+
+                    // Almacenar los datos originales
+                    originalData = {
+                        id: id,
+                        nombre: nombre,
+                        giro: giro,
+                        direccion: direccion,
+                        descripcion: descripcion,
+                        precio: precio
+                    };
+
+                    // Actualizar el contenido del modal con los datos de la fila
+                    $('#modalId').val(id);
+                    $('#modalNombre').val(nombre);
+                    $('#modalGiro').val(giro);
+                    $('#modalDireccion').val(direccion);
+                    $('#modalDescripcion').val(descripcion);
+                    $('#modalPrecio').val(precio);
+
+                    // Mostrar el modal
+                    $('#myModal').modal('show');
+                });
+
+                // Configurar evento clic para el botón Editar en el modal
+                $('#nuevoBtn').on('click', function () {
+                    // Habilitar la edición de los campos
+                    $('#modalId').val('');
+                    $('#modalNombre, #modalGiro, #modalDireccion, #modalDescripcion, #modalPrecio').val('');
+                    $('#modalNombre, #modalGiro, #modalDireccion, #modalDescripcion, #modalPrecio').prop('readonly', false);
+                });
+
+                // Configurar evento clic para el botón Guardar Cambios en el modal
+                $('#guardarCambiosBtn').on('click', function () {
+                    // Deshabilitar la edición de los campos
+                    $('#modalNombre, #modalGiro, #modalDireccion, #modalDescripcion, #modalPrecio').prop('readonly', true);
+
+                    // Obtener los datos editados
+                    var editedData = {
+                        id: $('#modalId').val(),
+                        nombre: $('#modalNombre').val(),
+                        giro: $('#modalGiro').val(),
+                        direccion: $('#modalDireccion').val(),
+                        descripcion: $('#modalDescripcion').val(),
+                        precio: $('#modalPrecio').val()
+                    };
+
+                    $.ajax({
+                        url: '/Home/editarRegistro', // Ajusta la URL al controlador y acción correspondientes
+                        type: 'POST',
+                        data: editedData,
+                        success: function (response) {
+                            alert("La solicitud fue exitosa.");
+                            // Espera 1 segundo (1000 milisegundos) antes de recargar la página
+                            setTimeout(function () {
+                                location.reload();
+                            }, 600);
+                        },
+                        error: function () {
+                            alert("El registro ya existe.");
+                            // Espera 1 segundo (1000 milisegundos) antes de recargar la página
+                            setTimeout(function () {
+                                location.reload();
+                            }, 600);
+                        }
+                    });
+
+                    // Mostrar los datos editados en la consola (ajusta esto para enviar al servidor)
+                    console.log("Datos Originales:", originalData);
+                    console.log("Datos Editados:", editedData);
+                });
+
+                $('#eliminarBtn').on('click', function () {
+                    // Deshabilitar la edición de los campos
+                    $('#modalNombre, #modalGiro, #modalDireccion, #modalDescripcion, #modalPrecio').prop('readonly', true);
+
+                    // Obtener los datos editados
+                    var editedData = {
+                        id: $('#modalId').val(),
+                        nombre: $('#modalNombre').val(),
+                        giro: $('#modalGiro').val(),
+                        direccion: $('#modalDireccion').val(),
+                        descripcion: $('#modalDescripcion').val(),
+                        precio: $('#modalPrecio').val()
+                    };
+
+                    $.ajax({
+                        url: '/Home/eliminarRegistro', // Ajusta la URL al controlador y acción correspondientes
+                        type: 'POST',
+                        data: editedData,
+                        success: function (response) {
+                            alert("La solicitud fue exitosa.");
+                            // Espera 1 segundo (1000 milisegundos) antes de recargar la página
+                            setTimeout(function () {
+                                location.reload();
+                            }, 600);
+
+                        },
+                        error: function () {
+                            alert("Se produjo un error al procesar la solicitud. Por favor, inténtelo de nuevo más tarde.");
+                        }
+                    });
+
+                    // Mostrar los datos editados en la consola (ajusta esto para enviar al servidor)
+                    console.log("Datos Originales:", originalData);
+                    console.log("Datos Editados:", editedData);
+                });
+            });
+        </script>
+    </div>
+
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+

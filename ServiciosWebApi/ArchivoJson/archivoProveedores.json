@@ -1,0 +1,50 @@
+[
+  {
+    "Id": 1,
+    "Nombre": "Hector",
+    "Giro": "Transporte",
+    "Direccion": "Calle 4 numero 99",
+    "Descripcion": "Transporte marino",
+    "Precio": "1111"
+  },
+  {
+    "Id": 2,
+    "Nombre": "Hector",
+    "Giro": "transporte 2",
+    "Direccion": "Calle 4 numero 99",
+    "Descripcion": "Transporte marino",
+    "Precio": "1000"
+  },
+  {
+    "Id": 3,
+    "Nombre": "Hector",
+    "Giro": "Transporte 3",
+    "Direccion": "Calle 4 numero 99",
+    "Descripcion": "Transporte Aereo",
+    "Precio": "2000"
+  },
+  {
+    "Id": 4,
+    "Nombre": "Hector",
+    "Giro": "Transporte 4",
+    "Direccion": "Calle 4 numero 99",
+    "Descripcion": "Transporte marino",
+    "Precio": "ochostring 6"
+  },
+  {
+    "Id": 5,
+    "Nombre": "ocho string 2",
+    "Giro": "Transporte",
+    "Direccion": "siete string 4",
+    "Descripcion": "Transporte Aereo",
+    "Precio": "1000"
+  },
+  {
+    "Id": 6,
+    "Nombre": "doce string 2",
+    "Giro": "Transporte",
+    "Direccion": "siete string 4",
+    "Descripcion": "Transporte Aereo",
+    "Precio": "2000"
+  }
+]

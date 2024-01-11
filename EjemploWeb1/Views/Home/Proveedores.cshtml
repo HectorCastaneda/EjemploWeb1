@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
     <style>
         .pagination-container {
             display: flex;
@@ -53,15 +58,6 @@
             }
     </style>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-
-    <!-- Bootstrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
     <!-- Contenido de la vista -->
     <div class="container">
         <h2>Lista de Proveedores</h2>
@@ -80,7 +76,7 @@
             <tbody>
                 @foreach (var persona in Model)
                 {
-                    <tr data-toggle="modal" onclick="mostrarBotonNuevo()"  data-target="#myModal" data-Id="@persona.Id" data-nombre="@persona.Nombre" data-giro="@persona.Giro" data-direccion="@persona.Direccion" data-descripcion="@persona.Descripcion" data-precio="@persona.Precio">
+                    <tr data-toggle="modal" onclick="mostrarBotonNuevo()" data-target="#myModal" data-Id="@persona.Id" data-nombre="@persona.Nombre" data-giro="@persona.Giro" data-direccion="@persona.Direccion" data-descripcion="@persona.Descripcion" data-precio="@persona.Precio">
                         <td>@persona.Id</td>
                         <td>@persona.Nombre</td>
                         <td>@persona.Giro</td>
@@ -109,7 +105,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Detalles de Persona</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" aria-label="Close" onclick="ocultarModal()" data-toggle="modal" data-target="#myModal">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -155,20 +151,25 @@
 
         <script>
             function ocultarBotonNuevo() {
-                // Ocultar el botón con el id "nuevoBtn"
+                // Ocultar el modal
                 $("#nuevoBtn").hide();
                 $("#eliminarBtn").hide();
+                $('#modalId').val('');
+                $('#modalNombre, #modalGiro, #modalDireccion, #modalDescripcion, #modalPrecio').val('');
             }
             function mostrarBotonNuevo() {
                 // Mostrar el botón con el id "nuevoBtn"
                 $("#nuevoBtn").show();
                 $("#eliminarBtn").show();
             }
+            function ocultarModal() {
+                // Ocultar el modal
+                $('#myModal').modal('hide');
+            }
+            
             $(document).ready(function () {
 
-                
                 var originalData = {}; // Almacena los datos originales antes de la edición
-
                 // Configurar evento clic para la fila de la tabla
                 $('table tbody tr').on('click', function () {
                     // Obtener los datos de la fila
@@ -289,9 +290,8 @@
     </div>
 
 
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 
 </body>
 </html>

@@ -5,7 +5,7 @@
     "Giro": "Transporte",
     "Direccion": "Calle 4 numero 99",
     "Descripcion": "Transporte marino",
-    "Precio": "1111"
+    "Precio": "951951"
   },
   {
     "Id": 2,
@@ -40,11 +40,27 @@
     "Precio": "1000"
   },
   {
-    "Id": 6,
-    "Nombre": "doce string 2",
-    "Giro": "Transporte",
-    "Direccion": "siete string 4",
-    "Descripcion": "Transporte Aereo",
-    "Precio": "2000"
+    "Id": 7,
+    "Nombre": "Hector",
+    "Giro": "proveedor de sistemas",
+    "Direccion": "calle 4",
+    "Descripcion": "desarrollo a la medida de sistemas de computo",
+    "Precio": "200000"
+  },
+  {
+    "Id": 8,
+    "Nombre": "samuel",
+    "Giro": "musico",
+    "Direccion": "calle 5",
+    "Descripcion": "guitarrista",
+    "Precio": "5000"
+  },
+  {
+    "Id": 9,
+    "Nombre": "castaneda",
+    "Giro": "motociclista",
+    "Direccion": "calle 6",
+    "Descripcion": "piloto de carreras",
+    "Precio": "10000"
   }
 ]

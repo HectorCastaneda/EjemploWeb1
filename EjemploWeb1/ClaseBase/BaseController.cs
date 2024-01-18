@@ -24,7 +24,7 @@ namespace EjemploWeb1.ClaseBase
 
         public string consumirServicio(string servicio)
         {
-            string apiUrl = "https://localhost:44321/api/" + servicio;
+            string apiUrl = "http://localhost:44321/api/" + servicio;
 
             // Instanciar HttpClient (deberías reutilizar esta instancia si es posible)
             using (HttpClient httpClient = new HttpClient())
@@ -70,7 +70,7 @@ namespace EjemploWeb1.ClaseBase
         public string RequestEliminar(string servicio, int id)
         {
             var client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Delete, "https://localhost:44321/api/" + servicio + "/" + id);
+            var request = new HttpRequestMessage(HttpMethod.Delete, "http://localhost:44321/api/" + servicio + "/" + id);
             var responseTask = client.SendAsync(request);
             var response = responseTask.Result;
             response.EnsureSuccessStatusCode();
@@ -79,7 +79,7 @@ namespace EjemploWeb1.ClaseBase
 
         public string EnviarPost(string servicio, string jsonRequest)
         {
-            string apiUrl = "https://localhost:44321/api/" + servicio;
+            string apiUrl = "http://localhost:44321/api/" + servicio;
             using (HttpClient httpClient = new HttpClient())
             {
                 try
@@ -106,7 +106,7 @@ namespace EjemploWeb1.ClaseBase
         public string RequestService(string servicio, string jsonRequest)
         {
             var client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Put, "https://localhost:44321/api/" + servicio);
+            var request = new HttpRequestMessage(HttpMethod.Put, "http://localhost:44321/api/" + servicio);
             var content = new StringContent(jsonRequest, null, "application/json");
             request.Content = content;
             var responseTask = client.SendAsync(request);
@@ -118,7 +118,7 @@ namespace EjemploWeb1.ClaseBase
         public string RequestServicePost(string servicio, string jsonRequest)
         {
             var client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44321/api/" + servicio);
+            var request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:44321/api/" + servicio);
             var content = new StringContent(jsonRequest, null, "application/json");
             request.Content = content;
             var responseTask = client.SendAsync(request);

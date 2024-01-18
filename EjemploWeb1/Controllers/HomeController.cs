@@ -29,7 +29,6 @@ namespace EjemploWeb1.Controllers
             ViewBag.Candidato = response.Replace("\"", string.Empty);
             return View();
         }
-
       
         public ActionResult Contact()
         {

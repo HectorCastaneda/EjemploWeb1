@@ -16,7 +16,7 @@ namespace ServiciosWebApi.Controllers
         private ITextWriter simpleWriter;
         private ITextWriter loggingWriter;
 
-        private GapsiApiServiceController()
+        public GapsiApiServiceController()
         {
             // Obteniendo directorio del pryecto
             string directorioProyecto = AppDomain.CurrentDomain.BaseDirectory;
